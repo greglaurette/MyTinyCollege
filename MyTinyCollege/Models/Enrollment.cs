@@ -1,4 +1,6 @@
-﻿namespace MyTinyCollege.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace MyTinyCollege.Models
 {
     public enum Grade
     {
@@ -12,6 +14,8 @@
 
         public virtual Student student { get; set; }
         public virtual Course course { get; set; }
+        
+        [DisplayFormat(NullDisplayText = "No Grade")]
         public Grade? Grade { get; set; }
     }
 }
