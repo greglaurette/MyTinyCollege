@@ -198,9 +198,27 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="DAL\SchoolContext.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\CollegeMigrations\201604251416381_InitialCreate.cs" />
+    <Compile Include="Migrations\CollegeMigrations\201604251416381_InitialCreate.Designer.cs">
+      <DependentUpon>201604251416381_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\CollegeMigrations\201604251429067_InitialCreate1.cs" />
+    <Compile Include="Migrations\CollegeMigrations\201604251429067_InitialCreate1.Designer.cs">
+      <DependentUpon>201604251429067_InitialCreate1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\CollegeMigrations\201604251432214_FirstName.cs" />
+    <Compile Include="Migrations\CollegeMigrations\201604251432214_FirstName.Designer.cs">
+      <DependentUpon>201604251432214_FirstName.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\CollegeMigrations\201604251439372_FirstName1.cs" />
+    <Compile Include="Migrations\CollegeMigrations\201604251439372_FirstName1.Designer.cs">
+      <DependentUpon>201604251439372_FirstName1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\CollegeMigrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Course.cs" />
     <Compile Include="Models\Department.cs" />
@@ -287,6 +305,20 @@
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\CollegeMigrations\201604251416381_InitialCreate.resx">
+      <DependentUpon>201604251416381_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\CollegeMigrations\201604251429067_InitialCreate1.resx">
+      <DependentUpon>201604251429067_InitialCreate1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\CollegeMigrations\201604251432214_FirstName.resx">
+      <DependentUpon>201604251432214_FirstName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\CollegeMigrations\201604251439372_FirstName1.resx">
+      <DependentUpon>201604251439372_FirstName1.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
