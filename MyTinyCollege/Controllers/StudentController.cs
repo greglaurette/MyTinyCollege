@@ -8,6 +8,8 @@ using System.Web;
 using System.Web.Mvc;
 using MyTinyCollege.DAL;
 using MyTinyCollege.Models;
+using PagedList;
+using MyTinyCollege.ViewModels;
 
 namespace MyTinyCollege.Controllers
 {
@@ -17,17 +19,35 @@ namespace MyTinyCollege.Controllers
 
         // GET: Student
 
-        //adding sorting functionality
-        public ActionResult Index(string sortOrder)
+        //adding sorting functionality,  filtering, paging
+        public ActionResult Index(string sortOrder, string searchString, string currentFilter, int? page)
         {
             //prep sort
             ViewBag.CurrentSort = sortOrder;
-            ViewBag.FNameSortParm = string.IsNullOrEmpty(sortOrder)?"fname_desc" : "";
+            ViewBag.FNameSortParm = string.IsNullOrEmpty(sortOrder)?"fname_desc" : "fname";
             ViewBag.LNameSortParm = string.IsNullOrEmpty(sortOrder)?"lname_desc" : "";
+            ViewBag.Email = string.IsNullOrEmpty(sortOrder) ? "email_desc" : "email";
+            ViewBag.EnrollmentDate = string.IsNullOrEmpty(sortOrder) ? "enroll_desc" : "enroll";
+
+
             //ViewBag.DateSortParm = sortOrder;
+            if (searchString != null)
+                page = 1;
+            else
+                searchString = currentFilter;
+
+            ViewBag.CurrentFilter = searchString;
 
             // get data
             var students = from s in db.Students select s;
+
+            // check for filter
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                //Apply filter on first and last name
+                students = students.Where(s => s.LastName.Contains(searchString) || s.FirstName.Contains(searchString));
+            }
+
             // apply sort order
             switch(sortOrder)
             {
@@ -37,13 +57,38 @@ namespace MyTinyCollege.Controllers
                 case "fname_desc":
                     students = students.OrderByDescending(s => s.FirstName);
                     break;
+                case "fname":
+                    students = students.OrderBy(s => s.FirstName);
+                    break;
+                case "email_desc":
+                    students = students.OrderByDescending(s => s.Email);
+                    break;
+                case "email":
+                    students = students.OrderBy(s => s.Email);
+                    break;
+                case "enroll_desc":
+                    students = students.OrderByDescending(s => s.EnrollmentDate);
+                    break;
+                case "enroll":
+                    students = students.OrderBy(s => s.EnrollmentDate);
+                    break;
                 default:
                     students = students.OrderBy(s => s.LastName);
                     break;
             }
-            return View(students.ToList());
+            //return View(students.ToList());
 
             //return View(db.Students.ToList());
+            //setup pager
+            int pageSize = 3; //3 records per page
+            int pageNumber = (page ?? 1);
+
+            /* The two question marks represent the null- coalescing operator.
+             * the null coalescing operator defines a default value for a nullable type;
+             * the expression (page ?? 1) means return the value of page if it has a value,
+             * or return 1 if page is null
+             */
+            return View(students.ToPagedList(pageNumber, pageSize));
         }
 
         //end of add
@@ -185,6 +230,22 @@ namespace MyTinyCollege.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult Stats()
+        {
+            IQueryable<ViewModels.EnrollmentDateGroup> data = from student in db.Students
+                                                              group student by student.EnrollmentDate into dateGroup
+                                                              select new ViewModels.EnrollmentDateGroup()
+                                                              {
+                                                                  EnrollmentDate = dateGroup.Key,
+                                                                  StudentCount = dateGroup.Count()
+                                                              };
+
+            //The LINQ statement above groups the student entities by enrollment date, 
+            //calculating the number of enities in each group, and storing the results
+            //in a colleection of EnrollmentDateGroup view model objects
+
+            return View(data.ToList());
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)
