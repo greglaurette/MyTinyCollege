@@ -233,6 +233,15 @@
       <DependentUpon>201604251439372_FirstName1.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\CollegeMigrations\Configuration.cs" />
+    <Compile Include="Migrations\IdentityMigrations\201604211418081_InitialCreate.cs" />
+    <Compile Include="Migrations\IdentityMigrations\201604211418081_InitialCreate.Designer.cs">
+      <DependentUpon>201604211418081_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\IdentityMigrations\201605031428443_InitialSeed.cs" />
+    <Compile Include="Migrations\IdentityMigrations\201605031428443_InitialSeed.Designer.cs">
+      <DependentUpon>201605031428443_InitialSeed.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\IdentityMigrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Course.cs" />
     <Compile Include="Models\Department.cs" />
@@ -333,6 +342,7 @@
     <Content Include="Views\Department\Details.cshtml" />
     <Content Include="Views\Department\Edit.cshtml" />
     <Content Include="Views\Department\Index.cshtml" />
+    <Content Include="Views\Course\UpdateCourseCredits.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -358,6 +368,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\CollegeMigrations\201604251439372_FirstName1.resx">
       <DependentUpon>201604251439372_FirstName1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\IdentityMigrations\201604211418081_InitialCreate.resx">
+      <DependentUpon>201604211418081_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\IdentityMigrations\201605031428443_InitialSeed.resx">
+      <DependentUpon>201605031428443_InitialSeed.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

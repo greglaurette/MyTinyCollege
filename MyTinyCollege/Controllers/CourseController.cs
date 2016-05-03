@@ -10,9 +10,11 @@ using MyTinyCollege.DAL;
 using MyTinyCollege.Models;
 
 namespace MyTinyCollege.Controllers
-{
+{   
+    //ading auth for admin only
+    [Authorize(Roles = "admin")]
     public class CourseController : Controller
-    {
+    {        
         private SchoolContext db = new SchoolContext();
 
         // GET: Course
@@ -138,6 +140,20 @@ namespace MyTinyCollege.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult UpdateCourseCredits()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult UpdateCourseCredits(int? multiplier)
+        {
+            if(multiplier!=null)
+            {
+                //raw sql
+                ViewBag.RowsAffected = db.Database.ExecuteSqlCommand("update Course set Credits = Credits * {0}",multiplier);
+            }
+            return View();
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)
