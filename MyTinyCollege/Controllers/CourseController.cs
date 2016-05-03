@@ -150,7 +150,7 @@ namespace MyTinyCollege.Controllers
             if(multiplier!=null)
             {
                 //raw sql
-                ViewBag.RowsAffected = db.Database.ExecuteSqlCommand("update Course set Credits = Credits * {0}",multiplier);
+                ViewBag.RowsAffected = db.Database.ExecuteSqlCommand("UPDATE Course SET credits = credits * {0}", multiplier);
             }
             return View();
         }
