@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using MyTinyCollege.Models;
+using MyTinyCollege.DAL;
 
 namespace MyTinyCollege.Controllers
 {
@@ -151,10 +152,35 @@ namespace MyTinyCollege.Controllers
         {
             if (ModelState.IsValid)
             {
+                //added existing person test
+                SchoolContext db = new SchoolContext();
+                Person instructorOrStudent = db.People.Where(p => p.Email == model.Email).SingleOrDefault();
+                if (instructorOrStudent == null)
+                {
+                    ModelState.AddModelError("", "Must be a student or professor at the college to Register");
+                    return View(model);
+                }
+
+                //*******************
+
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-                var result = await UserManager.CreateAsync(user, model.Password);
+                var result = await UserManager.CreateAsync(user, model.Password);               
+
+
                 if (result.Succeeded)
                 {
+                    //adding student or instructor role
+                    var isStudent = db.People.Find(instructorOrStudent.ID);
+                    if (isStudent is Student)
+                    {
+                        UserManager.AddToRole(user.Id, "student");
+                    }
+                    else
+                    {
+                        UserManager.AddToRole(user.Id, "instructor");
+                    }
+                    //*********************
+
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
