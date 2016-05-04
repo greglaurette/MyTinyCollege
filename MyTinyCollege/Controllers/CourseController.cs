@@ -17,6 +17,7 @@ namespace MyTinyCollege.Controllers
     {        
         private SchoolContext db = new SchoolContext();
 
+        
         // GET: Course
         public ActionResult Index(int? SelectedDepartment)
         {
@@ -154,6 +155,19 @@ namespace MyTinyCollege.Controllers
                 ViewBag.RowsAffected = db.Database.ExecuteSqlCommand("UPDATE Course SET credits = credits * {0}", multiplier);
             }
             return View();
+        }
+
+        [AllowAnonymous]
+        public ActionResult Listing(int? SelectedDepartment)
+        {
+            //selected department filter
+            //var departments = db.Departments.OrderBy(d=>d.Name).ToList();
+            //ViewBag.SelectedDepartment = new SelectList(departments, "DepartmentID", "Name", SelectedDepartment);
+
+            IQueryable<Course> courses = GetCourses(SelectedDepartment);
+
+            //var courses = db.Courses.Include(c => c.Department);
+            return View(courses.ToList());
         }
         protected override void Dispose(bool disposing)
         {
