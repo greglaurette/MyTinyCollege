@@ -41,6 +41,7 @@ namespace MyTinyCollege.Controllers
             return courses;
         }
 
+        [AllowAnonymous]
         // GET: Course/Details/5
         public ActionResult Details(int? id)
         {

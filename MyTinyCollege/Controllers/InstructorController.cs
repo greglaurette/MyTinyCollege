@@ -13,6 +13,7 @@ using MyTinyCollege.Controllers;
 
 namespace MyTinyCollege.Controllers
 {
+    [Authorize(Roles = "admin")]
     public class InstructorController : Controller
     {
         private SchoolContext db = new SchoolContext();
