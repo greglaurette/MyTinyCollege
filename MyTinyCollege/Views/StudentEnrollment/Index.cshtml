@@ -1,0 +1,56 @@
+﻿@model IEnumerable<MyTinyCollege.Models.Enrollment>
+
+@{
+    ViewBag.Title = "Enrolled Courses";
+}
+
+<h2>Enrolled Courses</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.course.CourseID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.course.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Grade)
+        </th>        
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.course.CourseID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.course.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Grade)
+        </td>        
+    </tr>
+}
+
+</table>
+
+<h2>Avilable Courses</h2>
+<table class="table">
+    <tr>
+        <th>Course Number</th>
+        <th>Title</th>
+        <td></td>
+    </tr>
+    @{
+        List<MyTinyCollege.ViewModels.AssignedCourseData> courses = ViewBag.Courses;
+        foreach (var course in courses)
+        {
+            <tr>
+                <td>@Html.DisplayFor(model=>course.CourseID)</td>
+                <td>@Html.DisplayFor(model => course.Title)</td>
+                <td><a href="@Html.Action("Enroll","StudentEnrollment",new { courseID=course.CourseID })">Enroll <span class="glyphicon glyphicon-plus-sign"></span></a></td>
+            </tr>
+        }
+    }
+</table>
